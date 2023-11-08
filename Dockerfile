@@ -5,6 +5,7 @@ WORKDIR /code
 COPY ./app /code/app
 
 COPY ./app/importCert.sh /certs/importCert.sh
+RUN chmod +x /certs/importCert.sh
 ARG trustStorePassword
 RUN /certs/importCert.sh $trustStorePassword
 
