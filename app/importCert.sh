@@ -1,6 +1,6 @@
 mydir=/tmp/certs
 truststore=${mydir}/rds-truststore.jks
-storepassword=a
+storepassword=123456
 
 curl -sS "https://s3.amazonaws.com/rds-downloads/global-bundle.pem" > ${mydir}/global-bundle.pem
 split -p "-----BEGIN CERTIFICATE-----" ${mydir}/global-bundle.pem rds-ca-

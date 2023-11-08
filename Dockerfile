@@ -1,9 +1,9 @@
 FROM amazoncorretto:17-alpine-jdk
 
+RUN apk add --no-cache openssl perl
+RUN mkdir /tmp/certs
 WORKDIR /code
-
 COPY ./app /code/app
-
 COPY ./app/importCert.sh /certs/importCert.sh
 RUN chmod +x /certs/importCert.sh
 ARG trustStorePassword
