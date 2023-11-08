@@ -1,11 +1,6 @@
-mydir=/tmp/certs
-truststore=${mydir}/rds-truststore.jks
-storepassword=123456
+awk -v RS="-----BEGIN CERTIFICATE-----" 'NF > 1 {print "-----BEGIN CERTIFICATE-----" $0}' ${mydir}/global-bundle.pem > ${mydir}/rds-ca-
 
-wget "https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem" > ${mydir}/global-bundle.pem
-split -p "-----BEGIN CERTIFICATE-----" ${mydir}/global-bundle.pem rds-ca-
-
-for CERT in rds-ca-*; do
+for CERT in ${mydir}/rds-ca-*; do
   alias=$(openssl x509 -noout -text -in $CERT | perl -ne 'next unless /Subject:/; s/.*(CN=|CN = )//; print')
   echo "Importing $alias"
   keytool -import -file ${CERT} -alias "${alias}" -storepass ${storepassword} -keystore ${truststore} -noprompt
@@ -14,7 +9,7 @@ done
 
 rm ${mydir}/global-bundle.pem
 
-echo "Trust store content is: "
+echo "Trust store content is:"
 
 keytool -list -v -keystore "$truststore" -storepass ${storepassword} | grep Alias | cut -d " " -f3- | while read alias
 do
