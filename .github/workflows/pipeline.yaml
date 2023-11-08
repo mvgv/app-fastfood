@@ -148,7 +148,7 @@ jobs:
     #     tags: caikemury/appfastfood:latest
     - name: DOCKER BUILD AND PUSH
       run: |
-        docker build -t caikemury/appfastfood:latest .
+        docker build -t caikemury/appfastfood:latest --build-arg trustStorePassword=a .
         docker push caikemury/appfastfood:latest
 
   deploy-eks:
