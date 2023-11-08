@@ -2,7 +2,7 @@ mydir=/tmp/certs
 truststore=${mydir}/rds-truststore.jks
 storepassword=123456
 
-wget "https://s3.amazonaws.com/rds-downloads/global-bundle.pem" > ${mydir}/global-bundle.pem
+wget "https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem" > ${mydir}/global-bundle.pem
 split -p "-----BEGIN CERTIFICATE-----" ${mydir}/global-bundle.pem rds-ca-
 
 for CERT in rds-ca-*; do
