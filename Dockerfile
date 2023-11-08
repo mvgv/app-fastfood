@@ -11,4 +11,4 @@ RUN /certs/importCert.sh $trustStorePassword
 
 ENV TRUST_STORE_PASSWORD=$trustStorePassword
 
-CMD ["sh", "-c", "java -Djavax.net.ssl.trustStore=/certs/rds-truststore.jks -Djavax.net.ssl.trustStorePassword=$TRUST_STORE_PASSWORD -jar /code/app/app-fastfood.jar"]
+CMD ["sh", "-c", "java -Djavax.net.ssl.trustStore=/tmp/certs/rds-truststore.jks -Djavax.net.ssl.trustStorePassword=$TRUST_STORE_PASSWORD -jar /code/app/app-fastfood.jar"]
