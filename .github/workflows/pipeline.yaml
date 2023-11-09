@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - Caike_pipeline
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -147,7 +148,7 @@ jobs:
     #     tags: caikemury/appfastfood:latest
     - name: DOCKER BUILD AND PUSH
       run: |
-        docker build -t caikemury/appfastfood:latest .
+        docker build -t caikemury/appfastfood:latest --build-arg trustStorePassword=a .
         docker push caikemury/appfastfood:latest
 
   deploy-eks:
@@ -160,21 +161,28 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set up AWS CLI
-      uses: aws-actions/configure-aws-credentials@v4.0.1
-      with:
-        role-to-assume: arn:aws:iam::101478099523:role/deploy_lambda_dynamo
-        aws-region: us-east-1 # Substitua pela sua região
+      run: |
+        echo ${{ secrets.AWS_ACCESS_KEY_ID }} > aws_access_key_id
+        echo ${{ secrets.AWS_SECRET_ACCESS_KEY }} > aws_secret_access_key
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set default.region us-east-1
 
     - name: Deploy to EKS
       run: |
         aws eks --region us-east-1 update-kubeconfig --name my-eks-cluster
         kubectl apply -f infra
-        kubectl config view
         kubectl get nodes
         kubectl get pods
-        kubectl get svc
         kubectl get deployments
-        kubectl describe pod appfastfood-deployment-648659bfb5-c4zg7
-
-
+        
+       
+        
+        # Fetch the logs of all pods
+        #pods=$(kubectl get pods --all-namespaces -o jsonpath='{.items[*].metadata.name}')
+        #for pod in $pods
+        #do
+          #echo "Fetching logs for pod $pod"
+          #kubectl logs $pod
+       #done
         
