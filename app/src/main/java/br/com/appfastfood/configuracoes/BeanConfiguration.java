@@ -1,14 +1,18 @@
 package br.com.appfastfood.configuracoes;
 
 import br.com.appfastfood.AppFastfoodApplication;
+import br.com.appfastfood.carrinho.infraestrutura.menssagem.CarrinhoFila;
+import br.com.appfastfood.carrinho.usecase.adaptadores.CarrinhoServicoImpl;
+import br.com.appfastfood.carrinho.usecase.portas.CarrinhoServico;
 import br.com.appfastfood.configuracoes.logs.Log;
 import br.com.appfastfood.configuracoes.logs.Log4jLog;
-import br.com.appfastfood.pedido.dominio.repositorios.PedidoRepositorio;
 import br.com.appfastfood.pedido.usecase.adaptadores.PedidoServicoImpl;
 import br.com.appfastfood.pedido.usecase.portas.PedidoServico;
-import br.com.appfastfood.produto.dominio.repositorios.ProdutoRepositorio;
+import br.com.appfastfood.produto.infraestrutura.menssagem.ProdutoFila;
 import br.com.appfastfood.produto.usecase.adaptadores.ProdutoServicoImpl;
 import br.com.appfastfood.produto.usecase.portas.ProdutoServico;
+import com.amazonaws.services.sns.AmazonSNS;
+import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,15 +21,24 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackageClasses = AppFastfoodApplication.class)
 public class BeanConfiguration {
 
-
     @Bean
-    ProdutoServico produtoServico(ProdutoRepositorio produtoRepositorio){
-        return new ProdutoServicoImpl(produtoRepositorio);
+    public AmazonSNS amazonSNS() {
+        return AmazonSNSClientBuilder.standard().build();
     }
 
     @Bean
-    PedidoServico pedidoServico(PedidoRepositorio pedidoRepositorio, ProdutoServico produtoServico ){
-        return new PedidoServicoImpl(pedidoRepositorio, produtoServico);
+    PedidoServico pedidoServico(ProdutoServico produtoServicoImplInject ){
+        return new PedidoServicoImpl(produtoServicoImplInject);
+    }
+
+    @Bean
+    CarrinhoServico carrinhoServico(ProdutoServico produtoServico, CarrinhoFila carrinhoFila){
+        return new CarrinhoServicoImpl(produtoServico, carrinhoFila);
+    }
+
+    @Bean
+    ProdutoServico produtoServico(ProdutoFila produtoFilaIN){
+        return new ProdutoServicoImpl(produtoFilaIN);
     }
     @Bean
     Log log(){

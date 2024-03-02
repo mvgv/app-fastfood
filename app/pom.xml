@@ -34,6 +34,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-sns</artifactId>
+			<version>1.12.138</version> <!-- Versão atualizada -->
+		</dependency>
+
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.28</version>
@@ -65,17 +71,6 @@
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
-		<dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongo-java-driver</artifactId>
-			<version>3.12.14</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
 			<version>2.14.1</version>
@@ -89,6 +84,11 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>4.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.0</version>
 		</dependency>
 	</dependencies>
 
@@ -109,13 +109,6 @@
 				<version>3.0.0-M5</version> <!-- Use a versão atualizada do maven-surefire-plugin -->
 				<configuration>
 					<systemPropertyVariables>
-						<spring.data.mongodb.uri>mongodb://localhost:27017/mydatabase</spring.data.mongodb.uri>
-						<spring.data.mongodb.port>27017</spring.data.mongodb.port>
-						<spring.data.mongodb.host>localhost</spring.data.mongodb.host>
-						<spring.data.mongodb.username>test-username</spring.data.mongodb.username>
-						<spring.data.mongodb.password>test-password</spring.data.mongodb.password>
-						<spring.data.mongodb.database>test-database</spring.data.mongodb.database>
-						<spring.data.mongodb.ssl.trust-store>global.pem</spring.data.mongodb.ssl.trust-store>
 						<spring.datasource.hikari.validation-timeout>5000</spring.datasource.hikari.validation-timeout>
 					</systemPropertyVariables>
 				</configuration>
