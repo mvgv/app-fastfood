@@ -13,6 +13,10 @@ import br.com.appfastfood.produto.usecase.adaptadores.ProdutoServicoImpl;
 import br.com.appfastfood.produto.usecase.portas.ProdutoServico;
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.AmazonSNSClientBuilder;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -32,14 +36,15 @@ public class BeanConfiguration {
     }
 
     @Bean
-    CarrinhoServico carrinhoServico(ProdutoServico produtoServico, CarrinhoFila carrinhoFila){
-        return new CarrinhoServicoImpl(produtoServico, carrinhoFila);
+    CarrinhoServico carrinhoServico(CarrinhoFila carrinhoFila){
+        return new CarrinhoServicoImpl(carrinhoFila);
     }
 
     @Bean
     ProdutoServico produtoServico(ProdutoFila produtoFilaIN){
         return new ProdutoServicoImpl(produtoFilaIN);
     }
+
     @Bean
     Log log(){
         return new Log4jLog(BeanConfiguration.class);

@@ -9,6 +9,7 @@ import br.com.appfastfood.carrinho.infraestrutura.menssagem.adaptadores.saida.Ca
 import br.com.appfastfood.carrinho.usecase.portas.CarrinhoServico;
 import br.com.appfastfood.pedido.dominio.modelos.VO.ProdutoVO;
 import br.com.appfastfood.produto.dominio.modelos.Produto;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,18 +24,21 @@ public class CarrinhoServicoImpl implements CarrinhoServico {
 
     @Override
     public void cadastrar(CarrinhoRequisicao carrinhoRequisicao) {
-        Double valorTotal = 0.0;
-        List<ProdutoVO> produtosVO = new ArrayList<>();
-
-        Carrinho carrinho = new Carrinho(produtosVO, new Cliente(carrinhoRequisicao.getIdCliente()), valorTotal, StatusCarrinhoEnum.ABERTO);
-
-        this.carrinhoFila.criar(carrinho);
+        try {
+            this.carrinhoFila.criar(carrinhoRequisicao);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void remover(Long id) {
-        this.carrinhoFila.buscarPorId(id);
-        this.carrinhoFila.remover(id);
+        try {
+            this.carrinhoFila.buscarPorId(id);
+            this.carrinhoFila.remover(id);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -52,12 +56,13 @@ public class CarrinhoServicoImpl implements CarrinhoServico {
 
     @Override
     public Carrinho atualizar(Long id, CarrinhoRequisicao carrinhoRequisicao) {
-        Double valorTotal = 0.0;
-        List<ProdutoVO> produtosVO = new ArrayList();
 
-        Carrinho carrinho = new Carrinho(produtosVO, new Cliente(carrinhoRequisicao.getIdCliente()), valorTotal);
-
-        CarrinhoOUT carrinhoAlterado = this.carrinhoFila.atualizar(id, carrinho);
+        CarrinhoOUT carrinhoAlterado = null;
+        try {
+            carrinhoAlterado = this.carrinhoFila.atualizar(id, carrinhoRequisicao);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
         List<ProdutoVO> produtoVOS = carrinhoAlterado.getProdutos().stream().map(produtoOUT -> new ProdutoVO(produtoOUT.getIdProduto(), produtoOUT.getQuantidadeProduto(), produtoOUT.getNome(), produtoOUT.getPreco(), produtoOUT.getCategoria(), produtoOUT.getUriImagem())).toList();
         Carrinho carrinhoModelo = new Carrinho(produtoVOS,carrinhoAlterado.getCliente(),carrinhoAlterado.getValorTotal(), carrinhoAlterado.getStatus());
@@ -67,7 +72,11 @@ public class CarrinhoServicoImpl implements CarrinhoServico {
 
     @Override
     public void fecharCarrinho(Long id) {
-        this.carrinhoFila.fecharCarrinho(id);
+        try {
+            this.carrinhoFila.fecharCarrinho(id);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

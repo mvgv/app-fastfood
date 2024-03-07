@@ -4,9 +4,9 @@ public class SNSContrato {
 
     public String metodo;
     public String descricao;
-    public Metadata metadata;
+    public MetadataIN metadata;
 
-    public SNSContrato(String metodo, String descricao, Metadata metadata) {
+    public SNSContrato(String metodo, String descricao, MetadataIN metadata) {
         this.metodo = metodo;
         this.descricao = descricao;
         this.metadata = metadata;
@@ -28,11 +28,11 @@ public class SNSContrato {
         this.descricao = descricao;
     }
 
-    public Metadata getMetadata() {
+    public MetadataIN getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(Metadata metadata) {
+    public void setMetadata(MetadataIN metadata) {
         this.metadata = metadata;
     }
 }

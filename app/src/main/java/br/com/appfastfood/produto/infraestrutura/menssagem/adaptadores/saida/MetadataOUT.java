@@ -1,17 +1,17 @@
 package br.com.appfastfood.produto.infraestrutura.menssagem.adaptadores.saida;
 
 public class MetadataOUT<T> {
-    public T t;
+    public T data;
 
-    public MetadataOUT(T t) {
-        this.t = t;
+    public MetadataOUT(T data) {
+        this.data = data;
     }
 
-    public T getT() {
-        return t;
+    public T getData() {
+        return data;
     }
 
-    public void setT(T t) {
-        this.t = t;
+    public void setData(T data) {
+        this.data = data;
     }
 }

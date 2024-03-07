@@ -1,4 +1,4 @@
-package br.com.appfastfood.carrinho.infraestrutura.menssagem.adaptadores.entrada;
+package br.com.appfastfood.produto.infraestrutura.menssagem.adaptadores.entrada;
 
 public class MetadataIN<T> {
     public T data;

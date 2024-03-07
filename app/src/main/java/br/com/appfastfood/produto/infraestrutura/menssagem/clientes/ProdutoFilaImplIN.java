@@ -33,7 +33,7 @@ public class ProdutoFilaImplIN implements ProdutoFila {
     @Override
     public ProdutoPorIdOUT buscarProdutoPorId(Long id) {
         ProdutoBuscarPorIdIN in = new ProdutoBuscarPorIdIN(id);
-        SNSContrato contrato = new SNSContrato(RequestMethod.GET.name(), "produto_buscar_por_id", new Metadata(in));
+        SNSContrato contrato = new SNSContrato(RequestMethod.GET.name(), "produto_buscar_por_id", new MetadataIN(in));
         String inStringJson = gson.toJson(contrato);
         return null;
     }
@@ -41,7 +41,7 @@ public class ProdutoFilaImplIN implements ProdutoFila {
     @Override
     public List<Produto> buscarPorCategoria(String categoria) {
         ProdutoBuscarPorCategoriaIN in = new ProdutoBuscarPorCategoriaIN(CategoriaEnum.valueOf(categoria).name());
-        SNSContrato contrato = new SNSContrato(RequestMethod.GET.name(), "produto_buscar_por_categoria", new Metadata(in));
+        SNSContrato contrato = new SNSContrato(RequestMethod.GET.name(), "produto_buscar_por_categoria", new MetadataIN(in));
         String inStringJson = gson.toJson(in);
         return null;
     }
@@ -57,7 +57,7 @@ public class ProdutoFilaImplIN implements ProdutoFila {
                 produto.getDescricao().getDescricao()
         );
 
-        SNSContrato contrato = new SNSContrato(RequestMethod.PUT.name(), "produto_atualizar", new Metadata(in));
+        SNSContrato contrato = new SNSContrato(RequestMethod.PUT.name(), "produto_atualizar", new MetadataIN(in));
         String inStringJson = gson.toJson(contrato);
         return null;
     }
@@ -65,14 +65,14 @@ public class ProdutoFilaImplIN implements ProdutoFila {
     @Override
     public void remover(Long id) {
         ProdutoRemoverIN in = new ProdutoRemoverIN(id);
-        SNSContrato contrato = new SNSContrato(RequestMethod.DELETE.name(), "produto_remover", new Metadata(in));
+        SNSContrato contrato = new SNSContrato(RequestMethod.DELETE.name(), "produto_remover", new MetadataIN(in));
         String inStringJson = gson.toJson(contrato);
     }
 
     @Override
     public void criar(Produto produto) {
         ProdutoIN in = new ProdutoIN(produto.getId(), produto.getNome().getNome(),produto.getPreco().getPreco(), produto.getUriImagem().getUriImagem(), produto.getCategoria().name(), produto.getDescricao().getDescricao());
-        SNSContrato contrato = new SNSContrato(RequestMethod.POST.name(), "produto_criar", new Metadata(in));
+        SNSContrato contrato = new SNSContrato(RequestMethod.POST.name(), "produto_criar", new MetadataIN(in));
     }
 
 }
