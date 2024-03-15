@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 public class PedidoController {
         private PedidoServico pedidoServico;
 
+
         public PedidoController(PedidoServico pedidoServico) {
                 this.pedidoServico = pedidoServico;
         }
@@ -40,7 +41,7 @@ public class PedidoController {
                                         @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResposta.class)) }),
                         @ApiResponse(responseCode = "400", description = "", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RequisicaoExcecao.class))) })
         public ResponseEntity<?> criar(@RequestBody PedidoRequisicao pedidoRequisicao) {
-
+                /*TRANSFORMAR EM ASSINCRONO*/
                 String id = this.pedidoServico.criar(pedidoRequisicao, "RECEBIDO", "1:00");
                 return ResponseEntity.status(HttpStatus.CREATED)
                                 .body(PedidoRequisicao.builder().idPedido(id).build());

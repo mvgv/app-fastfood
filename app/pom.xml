@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com</groupId>
 	<artifactId>app-fastfood</artifactId>
-	<version>2.0.0</version>
+	<version>2.0.1</version>
 	<name>app-fastfood</name>
 	<description>FastFood Application</description>
 	<properties>
@@ -20,6 +20,11 @@
         <sonar.projectKey>caikeburgos_app-fastfood-application</sonar.projectKey>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>io.awspring.cloud</groupId>
+			<artifactId>spring-cloud-aws-sns</artifactId>
+			<version>3.1.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
