@@ -8,15 +8,10 @@ public class PagamentoEfetuadoTopicHandler implements TopicHandler {
 
     //private final CarrinhoServico carrinhoService;
 
-    @Override
-    public void handle(SnsMessage message) {
-        System.out.println("Pagamento efetuado: " + message.toString());
-       // carrinhoService.fechaCarrinho("a");
 
-    }
 
     @Override
-    public String getTopicId() {
-        return "arn";
+    public void publish(String message, String topicAddress) {
+
     }
 }

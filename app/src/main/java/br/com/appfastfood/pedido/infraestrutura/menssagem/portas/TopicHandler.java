@@ -4,6 +4,6 @@ import com.amazonaws.services.sns.message.SnsMessage;
 
 public interface TopicHandler {
 
-    void handle(SnsMessage message);
-    String getTopicId();
+    void publish(String message, String topicAddress);
+
 }
