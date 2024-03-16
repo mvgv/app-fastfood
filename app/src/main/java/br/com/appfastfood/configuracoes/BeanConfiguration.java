@@ -7,6 +7,7 @@ import br.com.appfastfood.pedido.infraestrutura.menssagem.adaptadores.SNSTopicHa
 import br.com.appfastfood.pedido.infraestrutura.menssagem.portas.TopicHandler;
 import br.com.appfastfood.pedido.usecase.adaptadores.producers.PagamentoServicoImpl;
 import br.com.appfastfood.pedido.usecase.adaptadores.producers.PedidoServicoImpl;
+import br.com.appfastfood.pedido.usecase.portas.CarrinhoServico;
 import br.com.appfastfood.pedido.usecase.portas.PagamentoServico;
 import br.com.appfastfood.pedido.usecase.portas.PedidoServico;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -45,6 +46,16 @@ public class BeanConfiguration {
     @Bean
     PagamentoServico pagamentoServico(TopicHandler handler){
         return new PagamentoServicoImpl(handler);
+    }
+
+    @Bean
+    CarrinhoServico carrinhoServico(TopicHandler handler){
+        return new CarrinhoServico(handler);
+    }
+
+    @Bean
+    PedidoServico pedidoServico(TopicHandler handler){
+        return new PedidoServicoImpl(handler);
     }
 
     @Bean

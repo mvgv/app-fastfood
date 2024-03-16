@@ -9,7 +9,9 @@ import java.util.List;
 public interface PedidoServico {
 
     String criar(PedidoRequisicao pedido, String status, String tempo);
-    Pedido atualizar(Long id);
-    Pedido buscarPedidoPorId(Long id);
+    void preparaPedido(Long id);
+    void finalizaPedido(Long id);
+
+    void cancelaPedido(Long id);
     List<Pedido> listarTodosPedidos();
 }

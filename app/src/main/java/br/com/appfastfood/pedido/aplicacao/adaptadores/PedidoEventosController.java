@@ -3,6 +3,7 @@ package br.com.appfastfood.pedido.aplicacao.adaptadores;
 
 import br.com.appfastfood.pedido.aplicacao.adaptadores.requisicao.MensagemSNS;
 import br.com.appfastfood.pedido.usecase.portas.PagamentoServico;
+import br.com.appfastfood.pedido.usecase.portas.PedidoServico;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,10 @@ public class PedidoEventosController {
 
         private final PagamentoServico pagamentoServico;
 
-        public PedidoEventosController(PagamentoServico pagamentoServico) {
+        private final PedidoServico pedidoServico;
+
+        public PedidoEventosController(PagamentoServico pagamentoServico, PedidoServico pedidoServico) {
+            this.pedidoServico = pedidoServico;
             this.pagamentoServico = pagamentoServico;
         }
 
@@ -78,7 +82,7 @@ public class PedidoEventosController {
         }
 
 
-    @PostMapping("/efetua-pagamento")
+    @PostMapping("/pedido-preparado")
     public void handlePaySnsMessage(@RequestBody String notification) {
         ObjectMapper objectMapper = new ObjectMapper();
         MensagemSNS snsMessage;
