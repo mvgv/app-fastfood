@@ -51,10 +51,8 @@ public class BeanConfiguration {
     }
 
     @Bean
-    PedidoServico pedidoServico(TopicHandler handler, ObjectMapper object){
-        return new PedidoServicoImpl(handler,object);
-    }
-
+    PedidoServico pedidoServico(TopicHandler handler, ObjectMapper mapper) { return new PedidoServicoImpl(handler, mapper); }
+    
     @Bean
     PagamentoServico pagamentoServico(TopicHandler handler){
         return new PagamentoServicoImpl(handler);

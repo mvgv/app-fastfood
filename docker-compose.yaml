@@ -16,7 +16,16 @@ services:
     networks:
       - mynetwork
 
-  app:
+  fastfood-produtos:
+    image: fastfood-produtos
+    ports:
+      - "8081:8081"
+    depends_on:
+      - localhost.localstack.cloud
+    networks:
+      - mynetwork
+
+  fastfood:
     image: fastfood
     ports:
       - "8888:8888"
