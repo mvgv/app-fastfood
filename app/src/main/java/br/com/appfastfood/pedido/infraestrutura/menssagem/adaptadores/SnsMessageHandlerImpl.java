@@ -1,36 +1,26 @@
-package br.com.appfastfood.pedido.aplicacao.adaptadores;
+package br.com.appfastfood.pedido.infraestrutura.menssagem.adaptadores;
 
 import br.com.appfastfood.pedido.aplicacao.adaptadores.requisicao.MensagemSNS;
-import br.com.appfastfood.pedido.usecase.portas.PedidoServico;
+import br.com.appfastfood.pedido.infraestrutura.menssagem.portas.MessageHandler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.function.Consumer;
 
-@RestController
-public class CarrinhoEventosController  {
+public class SnsMessageHandlerImpl implements MessageHandler {
 
-    private final PedidoServico pedidoServico;
 
-    public CarrinhoEventosController(PedidoServico pedidoServico) {
-        this.pedidoServico = pedidoServico;
-    }
-
-   @PostMapping("/carrinho-fechado")
-    public void handleSnsCarrinhoFechado(@RequestBody String notification) {
-
+    @Override
+    public void handleMessage(String notification, Consumer<String> function) {
         ObjectMapper objectMapper = new ObjectMapper();
         MensagemSNS snsMessage;
         try {
             snsMessage = objectMapper.readValue(notification, MensagemSNS.class);
-            // Agora você pode verificar o tipo de mensagem e executar a ação apropriada
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error deserializing SNS message", e);
         }
@@ -58,12 +48,11 @@ public class CarrinhoEventosController  {
                     e.printStackTrace();
                     System.out.println("Error confirming subscription: " + e.getMessage());
                 }
-
                 break;
             case "Notification":
                 // Lógica para tratar mensagens recebidas
                 System.out.println("Received message: " + snsMessage.getMessage());
-                pedidoServico.preparaPedido(1L);
+                function.accept(snsMessage.getMessage());
                 break;
             case "UnsubscribeConfirmation":
                 // Lógica para tratar confirmações de cancelamento de inscrição
@@ -73,7 +62,6 @@ public class CarrinhoEventosController  {
                 System.out.println("Unknown message type: " + snsMessage.getType());
                 break;
         }
-
     }
 }
 

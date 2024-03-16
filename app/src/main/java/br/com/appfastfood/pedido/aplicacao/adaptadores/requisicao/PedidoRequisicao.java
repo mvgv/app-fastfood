@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.owasp.encoder.Encode;
+
 
 import java.io.Serializable;
 import java.util.List;
@@ -41,12 +43,16 @@ public class PedidoRequisicao implements Serializable {
             Double valorTotal,
             String status,
             String tempoEspera, String idPedido, String statusPagamento) {
-        this.idCliente = idCliente;
+        this.idCliente = Encode.forHtml(idCliente);
         this.valorTotal = valorTotal;
         this.produtos = produtos;
-        this.status = status;
-        this.tempoEspera = tempoEspera;
-        this.idPedido = idPedido;
-        this.statusPagamento = statusPagamento;
+        this.status = Encode.forHtml(status);
+        this.tempoEspera = Encode.forHtml(tempoEspera);
+        this.idPedido = Encode.forHtml(idPedido);
+        this.statusPagamento = Encode.forHtml(statusPagamento);
+    }
+
+    public PedidoRequisicao sanitizarEntrada(PedidoRequisicao req) {
+        return new PedidoRequisicao(req.getProdutos(), req.getIdCliente(), req.getValorTotal(), req.getStatus(), req.getTempoEspera(), req.getIdPedido(), req.getStatusPagamento());
     }
 }

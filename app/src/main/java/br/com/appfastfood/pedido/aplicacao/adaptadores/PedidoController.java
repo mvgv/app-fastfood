@@ -40,14 +40,12 @@ public class PedidoController {
                         @ApiResponse(responseCode = "201", description = "pedido cadastrado com sucesso", content = {
                                         @Content(mediaType = "application/json", schema = @Schema(implementation = PedidoResposta.class)) }),
                         @ApiResponse(responseCode = "400", description = "", content = @Content(mediaType = "application/json", schema = @Schema(implementation = RequisicaoExcecao.class))) })
-        public ResponseEntity<?> criar(@RequestBody PedidoRequisicao pedidoRequisicao) {
+        public ResponseEntity<?> criar(@RequestBody PedidoRequisicao pedidoRequisicao) throws JsonProcessingException {
                 /*TRANSFORMAR EM ASSINCRONO*/
-                String id = this.pedidoServico.criar(pedidoRequisicao, "RECEBIDO", "1:00");
+                String id = this.pedidoServico.criar(pedidoRequisicao.sanitizarEntrada(pedidoRequisicao));
                 return ResponseEntity.status(HttpStatus.CREATED)
                                 .body(PedidoRequisicao.builder().idPedido(id).build());
 
         }
-
-
 
 }

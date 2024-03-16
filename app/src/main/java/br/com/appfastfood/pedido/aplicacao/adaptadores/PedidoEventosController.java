@@ -2,6 +2,7 @@ package br.com.appfastfood.pedido.aplicacao.adaptadores;
 
 
 import br.com.appfastfood.pedido.aplicacao.adaptadores.requisicao.MensagemSNS;
+import br.com.appfastfood.pedido.infraestrutura.menssagem.portas.MessageHandler;
 import br.com.appfastfood.pedido.usecase.portas.PagamentoServico;
 import br.com.appfastfood.pedido.usecase.portas.PedidoServico;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,13 +21,15 @@ import java.net.http.HttpResponse;
 @RestController
 public class PedidoEventosController {
 
+        private final MessageHandler messageHandler;
         private final PagamentoServico pagamentoServico;
 
         private final PedidoServico pedidoServico;
 
-        public PedidoEventosController(PagamentoServico pagamentoServico, PedidoServico pedidoServico) {
+        public PedidoEventosController(PagamentoServico pagamentoServico, PedidoServico pedidoServico, MessageHandler messageHandler) {
             this.pedidoServico = pedidoServico;
             this.pagamentoServico = pagamentoServico;
+            this.messageHandler = messageHandler;
         }
 
         @PostMapping("/pedido-criado")
@@ -40,45 +43,7 @@ public class PedidoEventosController {
                 throw new RuntimeException("Error deserializing SNS message", e);
             }
 
-            switch (snsMessage.getType()) {
-                case "SubscriptionConfirmation":
-                    // Lógica para confirmar a inscrição
-                    String subscribeURL = snsMessage.getSubscribeURL();
-                    System.out.println("Received subscription confirmation request. URL: " + subscribeURL);
-                    HttpClient client = HttpClient.newHttpClient();
-                    URI uri = URI.create(subscribeURL);
-                    System.out.println("PATH URL: " + uri.getPath());
-                    HttpRequest request = HttpRequest.newBuilder()
-                            .uri(URI.create(subscribeURL))
-                            .GET() // Método GET para confirmar a inscrição
-                            .build();
-                    try {
-                        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                        if (response.statusCode() == 200) {
-                            System.out.println("Subscription confirmed successfully.");
-                        } else {
-                            System.out.println("Failed to confirm subscription. Response code: " + response.statusCode());
-                        }
-                    } catch (IOException | InterruptedException e) {
-                        e.printStackTrace();
-                        System.out.println("Error confirming subscription: " + e.getMessage());
-                    }
 
-                    break;
-                case "Notification":
-                    // Lógica para tratar mensagens recebidas
-                    System.out.println("Received message: " + snsMessage.getMessage());
-                    pagamentoServico.efetuaPagamento("Valor");
-
-                    break;
-                case "UnsubscribeConfirmation":
-                    // Lógica para tratar confirmações de cancelamento de inscrição
-                    System.out.println("Unsubscribed from topic");
-                    break;
-                default:
-                    System.out.println("Unknown message type: " + snsMessage.getType());
-                    break;
-            }
         }
 
 
