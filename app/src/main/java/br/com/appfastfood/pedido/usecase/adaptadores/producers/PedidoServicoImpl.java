@@ -28,25 +28,20 @@ public class PedidoServicoImpl implements PedidoServico {
     }
 
     @Override
-    public void preparaPedido(Long id) {
-        snsTopic.publish(id.toString(), "arn:aws:sns:us-east-1:000000000000:prepara-pedido");
+    public void preparaPedido(String pedido)  {
+        snsTopic.publish(pedido, "arn:aws:sns:us-east-1:000000000000:prepara-pedido");
     }
 
     @Override
-    public void finalizaPedido(Long id) {
-        snsTopic.publish(id.toString(), "arn:aws:sns:us-east-1:000000000000:finaliza-pedido");
+    public void finalizaPedido(String id) {
+        snsTopic.publish(id, "arn:aws:sns:us-east-1:000000000000:finaliza-pedido");
     }
 
     @Override
-    public void cancelaPedido(Long id) {
-        snsTopic.publish(id.toString(), "arn:aws:sns:us-east-1:000000000000:cancela-pedido");
+    public void cancelaPedido(String id) {
+        snsTopic.publish(id, "arn:aws:sns:us-east-1:000000000000:cancela-pedido");
     }
 
-
-    @Override
-    public List<Pedido> listarTodosPedidos() {
-        return null;
-    }
 
 
 }

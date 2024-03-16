@@ -10,9 +10,9 @@ import java.util.List;
 public interface PedidoServico {
 
     String criar(PedidoRequisicao pedido) throws JsonProcessingException;
-    void preparaPedido(Long id);
-    void finalizaPedido(Long id);
+    void preparaPedido(String id);
+    void finalizaPedido(String id);
 
-    void cancelaPedido(Long id);
-    List<Pedido> listarTodosPedidos();
+    void cancelaPedido(String id);
+
 }

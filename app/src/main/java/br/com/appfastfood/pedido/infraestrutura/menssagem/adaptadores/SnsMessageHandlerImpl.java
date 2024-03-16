@@ -16,7 +16,7 @@ public class SnsMessageHandlerImpl implements MessageHandler {
 
 
     @Override
-    public void handleMessage(String notification, Consumer<String> function) {
+    public void handleMessage(String notification, Consumer function) {
         ObjectMapper objectMapper = new ObjectMapper();
         MensagemSNS snsMessage;
         try {
