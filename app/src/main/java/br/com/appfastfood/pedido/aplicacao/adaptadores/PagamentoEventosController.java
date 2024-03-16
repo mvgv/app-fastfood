@@ -57,6 +57,6 @@ public class PagamentoEventosController {
             throw new RuntimeException("Error deserializing SNS message", e);
         }
 
-        messageHandler.handleMessage(notification, message -> pedidoServico.cancelaPedido(message));
+        messageHandler.handleMessage(notification, pedidoServico::cancelaPedido);
     }
 }

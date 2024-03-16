@@ -44,8 +44,7 @@ public class PedidoEventosController {
                 throw new RuntimeException("Error deserializing SNS message", e);
             }
 
-            Consumer<String> pagamentoFunction = pagamentoServico::efetuaPagamento;
-            messageHandler.handleMessage(notification, pagamentoFunction);
+            messageHandler.handleMessage(notification, pagamentoServico::efetuaPagamento);
 
         }
 
