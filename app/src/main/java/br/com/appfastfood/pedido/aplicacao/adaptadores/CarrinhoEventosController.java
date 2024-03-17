@@ -34,8 +34,8 @@ public class CarrinhoEventosController  {
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error deserializing SNS message", e);
         }
-       Consumer<String> pedidoFunction = pedidoServico::preparaPedido;
-       messageHandler.handleMessage(notification, pedidoFunction);
+
+       messageHandler.handleMessage(notification, pedidoServico::preparaPedido);
 
     }
 }

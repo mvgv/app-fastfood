@@ -41,7 +41,7 @@ public class PagamentoEventosController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error deserializing SNS message", e);
         }
-        messageHandler.handleMessage(notification, message -> carrinhoServico.fechaCarrinho(message));
+        messageHandler.handleMessage(notification, carrinhoServico::fechaCarrinho));
 
 
     }
