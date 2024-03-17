@@ -21,7 +21,7 @@ public class PedidoServicoImpl implements PedidoServico {
     @Override
     public String criar(PedidoRequisicao pedido) throws JsonProcessingException {
         String pedidoJson = objectMapper.writeValueAsString(pedido);
-        snsTopic.publish(pedidoJson, "arn:aws:sns:us-east-1:000000000000:pedido-criado");
+        snsTopic.publish(pedidoJson, "arn:aws:sns:us-east-1:000000000000:cria-pedido");
         return pedido.getIdPedido();
     }
 
