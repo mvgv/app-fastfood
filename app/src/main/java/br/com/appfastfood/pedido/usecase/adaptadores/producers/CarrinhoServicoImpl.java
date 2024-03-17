@@ -1,8 +1,6 @@
 package br.com.appfastfood.pedido.usecase.adaptadores.producers;
 
-import br.com.appfastfood.pedido.aplicacao.adaptadores.requisicao.PedidoRequisicao;
 import br.com.appfastfood.pedido.infraestrutura.menssagem.portas.TopicHandler;
-import br.com.appfastfood.pedido.infraestrutura.menssagem.requisicao.CarrinhoDTO;
 import br.com.appfastfood.pedido.infraestrutura.menssagem.requisicao.PedidoEventoRequisicao;
 import br.com.appfastfood.pedido.usecase.portas.CarrinhoServico;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -11,10 +9,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class CarrinhoServicoImpl implements CarrinhoServico {
 
     private final TopicHandler snsTopic;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
-    public CarrinhoServicoImpl(TopicHandler snsTopicHandler) {
+    public CarrinhoServicoImpl(TopicHandler snsTopicHandler, ObjectMapper objectMapper) {
         this.snsTopic = snsTopicHandler;
+        this.objectMapper = objectMapper;
     }
     @Override
     public void fechaCarrinho(String message) {

@@ -39,11 +39,11 @@ public class PedidoEventosController {
             MensagemSNS snsMessage;
             try {
                 snsMessage = objectMapper.readValue(notification, MensagemSNS.class);
+
                 // Agora você pode verificar o tipo de mensagem e executar a ação apropriada
             } catch (JsonProcessingException e) {
                 throw new RuntimeException("Error deserializing SNS message", e);
             }
-
             messageHandler.handleMessage(notification, pagamentoServico::efetuaPagamento);
 
         }

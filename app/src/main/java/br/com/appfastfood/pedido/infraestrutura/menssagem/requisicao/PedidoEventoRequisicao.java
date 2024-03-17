@@ -38,7 +38,7 @@ public class PedidoEventoRequisicao implements Serializable {
     @JsonProperty("status_pagamento")
     private String statusPagamento;
 
-    public PedidoEventoRequisicao(List<ProdutosReq> produtos,
+    public PedidoEventoRequisicao(List<ProdutosEventoRequisicao> produtos,
                             String idCliente,
                             Double valorTotal,
                             String status,
