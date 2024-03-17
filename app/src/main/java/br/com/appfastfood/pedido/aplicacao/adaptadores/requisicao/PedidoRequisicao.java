@@ -52,6 +52,8 @@ public class PedidoRequisicao implements Serializable {
         this.statusPagamento = Encode.forHtml(statusPagamento);
     }
 
+    public PedidoRequisicao(){}
+
     public PedidoRequisicao sanitizarEntrada(PedidoRequisicao req) {
         return new PedidoRequisicao(req.getProdutos(), req.getIdCliente(), req.getValorTotal(), req.getStatus(), req.getTempoEspera(), req.getIdPedido(), req.getStatusPagamento());
     }

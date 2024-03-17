@@ -1,12 +1,8 @@
 package br.com.appfastfood.pedido.aplicacao.adaptadores;
 
-import br.com.appfastfood.pedido.aplicacao.adaptadores.requisicao.RequisicaoExcecao;
 import br.com.appfastfood.pedido.aplicacao.adaptadores.requisicao.PedidoRequisicao;
-import br.com.appfastfood.pedido.aplicacao.adaptadores.requisicao.ProdutosReq;
+import br.com.appfastfood.pedido.aplicacao.adaptadores.requisicao.RequisicaoExcecao;
 import br.com.appfastfood.pedido.aplicacao.adaptadores.resposta.PedidoResposta;
-import br.com.appfastfood.pedido.dominio.modelos.Pedido;
-import br.com.appfastfood.pedido.dominio.modelos.enums.StatusPagamentoEnum;
-import br.com.appfastfood.pedido.dominio.modelos.enums.StatusPedidoEnum;
 import br.com.appfastfood.pedido.usecase.portas.PedidoServico;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,11 +13,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/pedidos")

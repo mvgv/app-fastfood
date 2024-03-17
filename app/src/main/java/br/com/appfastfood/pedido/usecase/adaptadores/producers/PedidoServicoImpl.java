@@ -1,14 +1,11 @@
 package br.com.appfastfood.pedido.usecase.adaptadores.producers;
 
 import br.com.appfastfood.pedido.aplicacao.adaptadores.requisicao.PedidoRequisicao;
-import br.com.appfastfood.pedido.dominio.modelos.Pedido;
 import br.com.appfastfood.pedido.infraestrutura.menssagem.portas.TopicHandler;
 import br.com.appfastfood.pedido.infraestrutura.menssagem.requisicao.PedidoEventoRequisicao;
 import br.com.appfastfood.pedido.usecase.portas.PedidoServico;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.List;
 
 public class PedidoServicoImpl implements PedidoServico {
 
@@ -24,14 +21,14 @@ public class PedidoServicoImpl implements PedidoServico {
     @Override
     public String criar(PedidoRequisicao pedido) throws JsonProcessingException {
         String pedidoJson = objectMapper.writeValueAsString(pedido);
-        snsTopic.publish(pedidoJson, "arn:aws:sns:us-east-1:000000000000:cria-pedido");
-        return pedido.toString();
+        snsTopic.publish(pedidoJson, "arn:aws:sns:us-east-1:000000000000:pedido-criado");
+        return pedido.getIdPedido();
     }
 
     @Override
     public void preparaPedido(String pedido)  {
         try {
-            PedidoEventoRequisicao dto = objectMapper.readValue(message, PedidoEventoRequisicao.class);
+            PedidoEventoRequisicao dto = objectMapper.readValue(pedido, PedidoEventoRequisicao.class);
             snsTopic.publish(pedido, "arn:aws:sns:us-east-1:000000000000:prepara-pedido");
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -39,13 +36,23 @@ public class PedidoServicoImpl implements PedidoServico {
     }
 
     @Override
-    public void finalizaPedido(String id) {
-        snsTopic.publish(id, "arn:aws:sns:us-east-1:000000000000:finaliza-pedido");
+    public void finalizaPedido(String pedido) {
+        try {
+            PedidoEventoRequisicao dto = objectMapper.readValue(pedido, PedidoEventoRequisicao.class);
+            snsTopic.publish(pedido, "arn:aws:sns:us-east-1:000000000000:finaliza-pedido");
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public void cancelaPedido(String id) {
-        snsTopic.publish(id, "arn:aws:sns:us-east-1:000000000000:cancela-pedido");
+    public void cancelaPedido(String pedido) {
+        try {
+            PedidoEventoRequisicao dto = objectMapper.readValue(pedido, PedidoEventoRequisicao.class);
+            snsTopic.publish(pedido, "arn:aws:sns:us-east-1:000000000000:cancela-pedido");
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

@@ -10,7 +10,6 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@Builder()
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProdutosEventoRequisicao implements Serializable {
 
@@ -31,5 +30,7 @@ public class ProdutosEventoRequisicao implements Serializable {
 
     @JsonProperty("uriImagem")
     private String uriImagem;
+
+    public ProdutosEventoRequisicao(){}
 
 }
