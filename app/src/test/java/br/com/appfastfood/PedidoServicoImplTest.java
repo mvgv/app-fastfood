@@ -47,7 +47,7 @@ public class PedidoServicoImplTest {
 
         pedidoServico.preparaPedido(pedido);
 
-        verify(snsTopic, times(1)).publish(pedido, "arn:aws:sns:us-east-1:000000000000:prepara-pedido");
+        verify(snsTopic, times(1)).publish(pedido, "arn:aws:sns:us-east-1:101478099523:prepara-pedido");
     }
 
     @Test
@@ -58,7 +58,7 @@ public class PedidoServicoImplTest {
 
         pedidoServico.finalizaPedido(pedido);
 
-        verify(snsTopic, times(1)).publish(pedido, "arn:aws:sns:us-east-1:000000000000:finaliza-pedido");
+        verify(snsTopic, times(1)).publish(pedido, "arn:aws:sns:us-east-1:101478099523:finaliza-pedido");
     }
 
     @Test
@@ -69,6 +69,6 @@ public class PedidoServicoImplTest {
 
         pedidoServico.cancelaPedido(pedido);
 
-        verify(snsTopic, times(1)).publish(pedido, "arn:aws:sns:us-east-1:000000000000:cancela-pedido");
+        verify(snsTopic, times(1)).publish(pedido, "arn:aws:sns:us-east-1:101478099523:cancela-pedido");
     }
 }
