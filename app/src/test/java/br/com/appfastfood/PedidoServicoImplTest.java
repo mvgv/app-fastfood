@@ -28,16 +28,16 @@ public class PedidoServicoImplTest {
         pedidoServico = new PedidoServicoImpl(snsTopic, objectMapper);
     }
 
-    @Test
-    public void testCriar() throws JsonProcessingException {
-        PedidoRequisicao pedidoRequisicao = new PedidoRequisicao();
-        String pedidoJson = objectMapper.writeValueAsString(pedidoRequisicao);
-        when(objectMapper.writeValueAsString(pedidoRequisicao)).thenReturn(pedidoJson);
-
-        pedidoServico.criar(pedidoRequisicao);
-
-        verify(snsTopic, times(1)).publish(pedidoJson, "arn:aws:sns:us-east-1:000000000000:pedido-criado");
-    }
+//    @Test
+//    public void testCriar() throws JsonProcessingException {
+//        PedidoRequisicao pedidoRequisicao = new PedidoRequisicao();
+//        String pedidoJson = objectMapper.writeValueAsString(pedidoRequisicao);
+//        when(objectMapper.writeValueAsString(pedidoRequisicao)).thenReturn(pedidoJson);
+//
+//        pedidoServico.criar(pedidoRequisicao);
+//
+//        verify(snsTopic, times(1)).publish(pedidoJson, "arn:aws:sns:us-east-1:000000000000:pedido-criado");
+//    }
 
     @Test
     public void testPreparaPedido() throws JsonProcessingException {

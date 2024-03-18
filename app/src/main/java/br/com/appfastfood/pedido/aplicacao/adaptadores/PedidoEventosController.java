@@ -44,13 +44,36 @@ public class PedidoEventosController {
             } catch (JsonProcessingException e) {
                 throw new RuntimeException("Error deserializing SNS message", e);
             }
+            try {
+                Thread.sleep(30000); // 30000 milliseconds = 30 seconds
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             messageHandler.handleMessage(notification, pagamentoServico::efetuaPagamento);
 
         }
 
 
     @PostMapping("/pedido-preparado")
-    public void handlePaySnsMessage(@RequestBody String notification) {
+    public void handlePedidoPreparadoSnsMessage(@RequestBody String notification) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        MensagemSNS snsMessage;
+        try {
+            snsMessage = objectMapper.readValue(notification, MensagemSNS.class);
+            // Agora você pode verificar o tipo de mensagem e executar a ação apropriada
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Error deserializing SNS message", e);
+        }
+        try {
+            Thread.sleep(30000); // 30000 milliseconds = 30 seconds
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        messageHandler.handleMessage(notification, pedidoServico::finalizaPedido);
+    }
+
+    @PostMapping("/pedido-finalizado")
+    public void handlePedidoFinalizadoSnsMessage(@RequestBody String notification) {
         ObjectMapper objectMapper = new ObjectMapper();
         MensagemSNS snsMessage;
         try {
@@ -62,5 +85,6 @@ public class PedidoEventosController {
 
         messageHandler.handleMessage(notification, pedidoServico::finalizaPedido);
     }
+
 }
 

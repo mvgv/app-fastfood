@@ -7,9 +7,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 public interface PedidoServico {
 
     String criar(PedidoRequisicao pedido) throws JsonProcessingException;
-    void preparaPedido(String id);
-    void finalizaPedido(String id);
+    void preparaPedido(String pedido);
+    void finalizaPedido(String pedido);
 
-    void cancelaPedido(String id);
+    void cancelaPedido(String pedido);
+    void notificaCliente(String pedido);
 
 }

@@ -55,6 +55,20 @@ public class PedidoServicoImpl implements PedidoServico {
         }
     }
 
+    @Override
+    public void notificaCliente(String pedido) {
+        try {
+
+            PedidoEventoRequisicao dto = objectMapper.readValue(pedido, PedidoEventoRequisicao.class);
+            if (dto.getStatus() == "FINALIZADO")
+                System.out.println("Notificando cliente - Pedido Finalizado!" + dto.getIdCliente());
+            else
+                System.out.println("Notificando cliente - Pedido Cancelado!" + dto.getIdCliente());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
 }
