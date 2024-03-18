@@ -171,19 +171,9 @@ jobs:
 
     - name: Deploy to EKS
       run: |
-        aws eks --region us-east-1 update-kubeconfig --name my-eks-cluster
+        aws eks --region us-east-1 update-kubeconfig --name appfastfood-cluster-prod
         kubectl apply -f infra
         kubectl get nodes
         kubectl get pods
         kubectl get deployments
-        
-       
-        
-        # Fetch the logs of all pods
-        #pods=$(kubectl get pods --all-namespaces -o jsonpath='{.items[*].metadata.name}')
-        #for pod in $pods
-        #do
-          #echo "Fetching logs for pod $pod"
-          #kubectl logs $pod
-       #done
-        
+
