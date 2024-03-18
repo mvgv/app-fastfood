@@ -176,14 +176,4 @@ jobs:
         kubectl get nodes
         kubectl get pods
         kubectl get deployments
-        
-       
-        
-        # Fetch the logs of all pods
-        #pods=$(kubectl get pods --all-namespaces -o jsonpath='{.items[*].metadata.name}')
-        #for pod in $pods
-        #do
-          #echo "Fetching logs for pod $pod"
-          #kubectl logs $pod
-       #done
-        
+
