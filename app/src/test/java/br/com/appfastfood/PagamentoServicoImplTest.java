@@ -34,7 +34,7 @@ public class PagamentoServicoImplTest {
 
         pagamentoServico.efetuaPagamento(message);
 
-        verify(snsTopic, times(1)).publish(message, "arn:aws:sns:us-east-1:000000000000:efetua-pagamento");
+        verify(snsTopic, times(1)).publish(message, "arn:aws:sns:us-east-1:101478099523:efetua-pagamento");
     }
 
     @Test
