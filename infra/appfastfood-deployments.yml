@@ -20,8 +20,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: appfastfood-configmap
-            - secretRef:
-                name: app-secret
           readinessProbe:
             httpGet:
               path: /healthCheck   # Rota de verificação de saúde do seu aplicativo
