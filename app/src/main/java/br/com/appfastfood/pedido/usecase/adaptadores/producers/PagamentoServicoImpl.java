@@ -23,7 +23,7 @@ public class PagamentoServicoImpl implements PagamentoServico {
     public void efetuaPagamento(String message)  {
         try {
             PedidoEventoRequisicao dto = objectMapper.readValue(message, PedidoEventoRequisicao.class);
-            snsTopic.publish(message, "arn:aws:sns:us-east-1:000000000000:efetua-pagamento");
+            snsTopic.publish(message, "arn:aws:sns:us-east-1:101478099523:efetua-pagamento");
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

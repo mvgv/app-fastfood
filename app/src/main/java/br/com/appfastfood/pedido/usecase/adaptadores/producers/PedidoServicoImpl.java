@@ -21,7 +21,7 @@ public class PedidoServicoImpl implements PedidoServico {
     @Override
     public String criar(PedidoRequisicao pedido) throws JsonProcessingException {
         String pedidoJson = objectMapper.writeValueAsString(pedido);
-        snsTopic.publish(pedidoJson, "arn:aws:sns:us-east-1:000000000000:cria-pedido");
+        snsTopic.publish(pedidoJson, "arn:aws:sns:us-east-1:101478099523:cria-pedido");
         return pedido.getIdPedido();
     }
 
@@ -29,7 +29,7 @@ public class PedidoServicoImpl implements PedidoServico {
     public void preparaPedido(String pedido)  {
         try {
             PedidoEventoRequisicao dto = objectMapper.readValue(pedido, PedidoEventoRequisicao.class);
-            snsTopic.publish(pedido, "arn:aws:sns:us-east-1:000000000000:prepara-pedido");
+            snsTopic.publish(pedido, "arn:aws:sns:us-east-1:101478099523:prepara-pedido");
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -39,7 +39,7 @@ public class PedidoServicoImpl implements PedidoServico {
     public void finalizaPedido(String pedido) {
         try {
             PedidoEventoRequisicao dto = objectMapper.readValue(pedido, PedidoEventoRequisicao.class);
-            snsTopic.publish(pedido, "arn:aws:sns:us-east-1:000000000000:finaliza-pedido");
+            snsTopic.publish(pedido, "arn:aws:sns:us-east-1:101478099523:finaliza-pedido");
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -49,7 +49,7 @@ public class PedidoServicoImpl implements PedidoServico {
     public void cancelaPedido(String pedido) {
         try {
             PedidoEventoRequisicao dto = objectMapper.readValue(pedido, PedidoEventoRequisicao.class);
-            snsTopic.publish(pedido, "arn:aws:sns:us-east-1:000000000000:cancela-pedido");
+            snsTopic.publish(pedido, "arn:aws:sns:us-east-1:101478099523:cancela-pedido");
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

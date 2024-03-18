@@ -19,7 +19,7 @@ public class CarrinhoServicoImpl implements CarrinhoServico {
     public void fechaCarrinho(String message) {
         try {
             PedidoEventoRequisicao dto = objectMapper.readValue(message, PedidoEventoRequisicao.class);
-            snsTopic.publish(objectMapper.writeValueAsString(dto), "arn:aws:sns:us-east-1:000000000000:fecha-carrinho");
+            snsTopic.publish(objectMapper.writeValueAsString(dto), "arn:aws:sns:us-east-1:101478099523:fecha-carrinho");
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

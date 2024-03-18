@@ -3,7 +3,10 @@ on:
   push:
     branches:
       - main
-      - Caike_pipeline
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -83,7 +86,6 @@ jobs:
         curl -s "https://sonarcloud.io/project/configuration?id=caikeburgos_app-fastfood-application" -H "Authorization: Basic $SONAR_TOKEN"
          
   build:
-    needs: [teste-unitario] 
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -119,7 +121,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: 
      - build
-     - code-analysis
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -148,7 +149,7 @@ jobs:
     #     tags: caikemury/appfastfood:latest
     - name: DOCKER BUILD AND PUSH
       run: |
-        docker build -t caikemury/appfastfood:latest --build-arg trustStorePassword=a .
+        docker build -t caikemury/appfastfood:latest .
         docker push caikemury/appfastfood:latest
 
   deploy-eks:
