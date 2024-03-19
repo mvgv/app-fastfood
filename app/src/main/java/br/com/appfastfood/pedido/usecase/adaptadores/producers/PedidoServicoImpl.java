@@ -61,9 +61,9 @@ public class PedidoServicoImpl implements PedidoServico {
 
             PedidoEventoRequisicao dto = objectMapper.readValue(pedido, PedidoEventoRequisicao.class);
             if (dto.getStatus() == "FINALIZADO")
-                System.out.println("Notificando cliente - Pedido Finalizado!" + dto.getIdCliente());
+                snsTopic.publish("Pedido Finalizado!", "arn:aws:sns:us-east-1:101478099523:notifica-cliente");
             else
-                System.out.println("Notificando cliente - Pedido Cancelado!" + dto.getIdCliente());
+                snsTopic.publish("Pedido Cancelado!", "arn:aws:sns:us-east-1:101478099523:notifica-cliente");
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
