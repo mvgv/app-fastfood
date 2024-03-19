@@ -83,7 +83,7 @@ public class PedidoEventosController {
             throw new RuntimeException("Error deserializing SNS message", e);
         }
 
-        messageHandler.handleMessage(notification, pedidoServico::finalizaPedido);
+        messageHandler.handleMessage(notification, pedidoServico::notificaCliente);
     }
 
 }
